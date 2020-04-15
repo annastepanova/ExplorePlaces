@@ -21,14 +21,11 @@ const MainNavigation = () => {
   return (
     <>
     {sideBarIsOpen && <Backdrop onClick={closeSideBar}/>}
-    {
-      sideBarIsOpen ? (
-    <SideBar>
+    <SideBar show={sideBarIsOpen} onClick={closeSideBar}>
       <nav className="main-navigation__drawer-nav">
         <NavLinks/>
       </nav>
-    </SideBar> ) : null
-    }
+    </SideBar> 
     <MainHeader>
       <button className="main-navigation__menu-btn" onClick={openSideBar}>
         <span />
