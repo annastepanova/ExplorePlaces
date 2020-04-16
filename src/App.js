@@ -13,7 +13,7 @@ const App = () => {
         <main>
           <Switch>
             <Route exact path="/" component={Users}/>
-            <Route exact path="/:uid/places" component={UserPlaces}/>
+            <Route exact path="/:userId/places" component={UserPlaces}/>
             <Route exact path="/places/new" component={NewPlace}/>
             <Redirect to="/"/>
           </Switch>
