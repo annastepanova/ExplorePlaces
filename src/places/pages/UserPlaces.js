@@ -12,7 +12,7 @@ import PlaceList from '../components/PlaceList'
       address: '139 Tremont St, Boston, MA 02111',
       location: {
         lat: 42.355437,
-        long: -71.0662329
+        lng: -71.0662329
       },
       creator: 'u1'
     },
@@ -24,7 +24,7 @@ import PlaceList from '../components/PlaceList'
       address: '139 Tremont St, Boston, MA 02111',
       location: {
         lat: 42.355437,
-        long: -71.0662329
+        lng: -71.0662329
       },
       creator: 'u2'
     }
