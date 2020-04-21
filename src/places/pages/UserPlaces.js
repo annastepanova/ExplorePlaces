@@ -18,7 +18,7 @@ import PlaceList from '../components/PlaceList'
     },
     {
       id: 'p1',
-      title: 'Boston Common',
+      title: 'Boom',
       description: 'Central public park in downtown Boston, Massachusetts',
       imageURL: 'https://cdn.traveltripper.io/site-assets/192_866_18602/media/2018-08-29-113233/small_boston-common-guide.jpg',
       address: '139 Tremont St, Boston, MA 02111',
