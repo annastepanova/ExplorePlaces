@@ -1,20 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UsersList from '../components/UsersList'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 
 const Users = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState()
+  const [loadedUsers, setLoadedUsers] = useState()
 
-  const USERS = [
-    {
-      id: 'u1',
-      name: 'Anna Stepanova',
-      image: 'https://indrej.com/wp-content/uploads/2018/01/Cambridge2520Mass_0.jpg',
-      places: 3
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true)
+      try {
+        const response = await fetch('http://localhost:5000/api/users')
+        const responseData = await response.json()
+
+        if (!response.ok) {
+          throw new Error(responseData.message)
+        }
+
+        setLoadedUsers(responseData.users)
+        setIsLoading(false)
+      }
+      catch (err) {
+        setError(err.message)
+      }
+      setIsLoading(false)
     }
-  ]
+    sendRequest()
+  }, [])
+
+  const errorHandler = () => {
+    setError(null)
+  }
 
 
   return (
-    <UsersList items={USERS}/>
+    <>
+    <ErrorModal error={error} onClear={errorHandler}/>
+    {isLoading && (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    )}
+    {!isLoading && loadedUsers && <UsersList items={loadedUsers}/>}
+    </>
   )
 }
 
