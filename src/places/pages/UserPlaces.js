@@ -1,43 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import PlaceList from '../components/PlaceList'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
+import { useHttpClient } from '../../shared/hooks/http-hook'
 
 
-  const DUMMY_PLACES = [
-    {
-      id: 'p1',
-      title: 'Boston Common',
-      description: 'Central public park in downtown Boston, Massachusetts',
-      imageURL: 'https://cdn.traveltripper.io/site-assets/192_866_18602/media/2018-08-29-113233/small_boston-common-guide.jpg',
-      address: '139 Tremont St, Boston, MA 02111',
-      location: {
-        lat: 42.355437,
-        lng: -71.0662329
-      },
-      creator: 'u1'
-    },
-    {
-      id: 'p1',
-      title: 'Boom',
-      description: 'Central public park in downtown Boston, Massachusetts',
-      imageURL: 'https://cdn.traveltripper.io/site-assets/192_866_18602/media/2018-08-29-113233/small_boston-common-guide.jpg',
-      address: '139 Tremont St, Boston, MA 02111',
-      location: {
-        lat: 42.355437,
-        lng: -71.0662329
-      },
-      creator: 'u2'
+const UserPlaces = () => {
+  const [loadedPlaces, setLoadedPlaces] = useState()
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
+
+  const userId = useParams().userId
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:5000/api/places/user/${userId}`
+        )
+        setLoadedPlaces(responseData.places)
+      }
+      catch (err) {
+
+      }
+      
     }
-  ]
+    fetchPlaces()
+  }, [sendRequest, userId])
 
-
-  const UserPlaces = () => {
-    const userId = useParams().userId
-    const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId)
-    return (
-      <PlaceList items={loadedPlaces} />
-    )
-  }
+  
+  return (
+    <>
+      <ErrorModal error={error} onClear={clearError} />
+      { isLoading && (
+          <div className="center">
+            <LoadingSpinner/>
+          </div>
+        )
+      }
+      { !isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    </>
+  )
+}
 
 
 export default UserPlaces
