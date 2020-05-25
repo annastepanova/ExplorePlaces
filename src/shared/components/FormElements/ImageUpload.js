@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import Button from './Button'
+import './ImageUpload.css'
 
 
 
@@ -16,7 +17,7 @@ const ImageUpload = (props) => {
   }
 
   return (
-    <div className="form=control">
+    <div className="form-control">
       <input 
         id={props.id} 
         ref={fileAttachRef}
